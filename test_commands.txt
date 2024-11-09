@@ -1,0 +1,8 @@
+# Test
+pytest {test_script}
+
+# Test setup_method and teardown_method
+pytest {test_script} -s
+
+# Test marked function
+pytest {function_name} -m

@@ -1,0 +1,238 @@
+# conftest.py --> Script to define global variables
+# Do not abuse it to avoid overloadings
+
+import pytest
+import source.shapes as shapes
+
+@pytest.fixture
+# This is a doceration to create a test instance
+def test_rectangle():
+  return shapes.Rectangle(length=10, width=20)
+
+@pytest.fixture
+# This a another test instance
+def other_triangle():
+  return shapes.Rectangle(length=5, width=6)
+import math
+import source.shapes as shapes
+
+
+class TestCircle:
+
+  """
+  setup_method and teardown_method:
+    They are initialized before each test, they print test object
+
+  Execution:
+    pytest -s {test_script}
+  """
+  
+  def setup_method(self, method):
+    print(f"\nSetting up -> {method}")
+    self.circle = shapes.Circle(10)
+
+  def teardown_method(self, method):
+    print(f"Tearing down -> {method}")
+    del self.circle
+
+
+  def test_area(self):
+    # assert self.circle.area() == (math.pi * self.circle.radius) ** 2
+    result = self.circle.area()
+    expected = (math.pi * self.circle.radius) ** 2
+    assert result == expected
+
+  def test_perimeter(self):
+    # assert self.circle.perimeter() == (math.pi * self.radius) * 2
+    result = self.circle.perimeter()
+    expected = (math.pi * self.circle.radius) * 2
+    assert result == expected
+
+  def test_not_same_area_rectangle(self, test_rectangle):
+    assert self.circle.area() != test_rectangle.area()
+import time
+import pytest
+import source.functions as functions
+
+"""
+Execution: pytest {test_script}
+"""
+
+def test_add():
+  result = functions.add(number_one=1, number_two=4)
+  assert result == 5
+
+def test_add_strings():
+  result = functions.add(number_one="I like ", number_two="burgers")
+  assert result == "I like burgers"
+
+def test_divide():
+  result = functions.divide(number_one=10, number_two=5)
+  assert result == 2
+
+def test_divide_by_zero():
+  with pytest.raises(ZeroDivisionError):
+    functions.divide(number_one=10, number_two=0)
+
+
+"""
+These are examples of marking with pytest
+Execution:
+  pytest -m {slow}
+"""
+@pytest.mark.slow
+# Marked as: 'slow'
+# This function is slow
+def test_very_slow():
+  time.sleep(5)
+  assert functions.divide(number_one=10, number_two=5) == 2
+
+
+@pytest.mark.skip(reason="This feature is currently broken")
+# Marked as: 'skip'
+# This function will be skipped
+def test_add():
+  assert functions.add(number_one=1, number_two=2) == 3
+
+
+@pytest.mark.xfail(reason="We know we cannot divide by zero")
+# Marked as: 'xfail'
+# This function is broken
+def test_divide_by_zero_broken():
+  functions.divide(number_one=4, number_two=0)
+def test_area(test_rectangle):
+  assert test_rectangle.area() == 10 * 20
+
+def test_perimeter(test_rectangle):
+  assert test_rectangle.perimeter() == (10 + 20) * 2
+
+def test_not_equal(test_rectangle, other_triangle):
+  assert test_rectangle != other_triangle
+import pytest
+from source.school import Classroom, Teacher, Student, TooManyStudents
+
+# Custom fixture for initializing Hogwarts-themed classroom with students and teacher
+@pytest.fixture
+def hogwarts_classroom():
+    teacher = Teacher("Minerva McGonagall")
+    students = [
+        Student("Harry Potter"),
+        Student("Hermione Granger"),
+        Student("Ron Weasley"),
+        Student("Draco Malfoy"),
+        Student("Luna Lovegood"),
+    ]
+    course_title = "Defense Against the Dark Arts"
+    return Classroom(teacher, students, course_title)
+
+# Fixture to create individual Hogwarts students
+@pytest.fixture
+def harry():
+    return Student("Harry Potter")
+
+@pytest.fixture
+def dumbledore():
+    return Teacher("Albus Dumbledore")
+
+# Test that classroom initialization works as expected
+def test_classroom_initialization(hogwarts_classroom):
+    assert hogwarts_classroom.teacher.name == "Minerva McGonagall"
+    assert len(hogwarts_classroom.students) == 5
+    assert hogwarts_classroom.course_title == "Defense Against the Dark Arts"
+
+# Test adding students up to limit
+def test_add_student_within_limit(hogwarts_classroom):
+    new_student = Student("Neville Longbottom")
+    hogwarts_classroom.add_student(new_student)
+    assert new_student in hogwarts_classroom.students
+    assert len(hogwarts_classroom.students) == 6
+
+# Test exceeding the student limit and triggering TooManyStudents exception
+def test_add_student_exceeds_limit(hogwarts_classroom):
+    additional_students = [
+        Student("Seamus Finnigan"),
+        Student("Dean Thomas"),
+        Student("Cho Chang"),
+        Student("Ginny Weasley"),
+        Student("Cedric Diggory"),
+        Student("Fleur Delacour"),
+    ]
+    for student in additional_students[:5]:
+        hogwarts_classroom.add_student(student)
+
+    with pytest.raises(TooManyStudents):
+        hogwarts_classroom.add_student(additional_students[5])
+
+# Test removing a student by name
+def test_remove_student(hogwarts_classroom):
+    hogwarts_classroom.remove_student("Draco Malfoy")
+    assert all(student.name != "Draco Malfoy" for student in hogwarts_classroom.students)
+    assert len(hogwarts_classroom.students) == 4
+
+# Test changing the teacher of the classroom
+def test_change_teacher(hogwarts_classroom, dumbledore):
+    hogwarts_classroom.change_teacher(dumbledore)
+    assert hogwarts_classroom.teacher == dumbledore
+
+# Parameterized test for ensuring a variety of Hogwarts students can be added without exceeding limits
+@pytest.mark.parametrize("student_name", [
+    "Neville Longbottom",
+    "Cedric Diggory",
+    "Cho Chang",
+    "Lavender Brown",
+])
+def test_parameterized_add_student(hogwarts_classroom, student_name):
+    student = Student(student_name)
+    if len(hogwarts_classroom.students) < 10:
+        hogwarts_classroom.add_student(student)
+        assert student in hogwarts_classroom.students
+    else:
+        with pytest.raises(TooManyStudents):
+            hogwarts_classroom.add_student(student)
+# Script for mock tests
+
+import requests
+import pytest
+from unittest import mock
+import source.service as service
+
+@mock.patch("source.service.get_user_from_db")
+def test_get_user_from_db(mock_get_user_from_db):
+  mock_get_user_from_db.return_value = "Mocked Alice"
+  user_name = service.get_user_from_db(1)
+
+  assert user_name == "Mocked Alice"
+
+@mock.patch("requests.get")
+def test_get_users(mock_get):
+  mock_response = mock.Mock()
+  mock_response.status_code = 200
+  mock_response.json.return_value = {"id": 1, "name": "John Doe"}
+  mock_get.return_value = mock_response
+  data = service.get_users()
+
+  assert data == {"id": 1, "name": "John Doe"}
+
+@mock.patch("requests.get")
+def test_get_users_error(mock_get):
+  mock_response = mock.Mock()
+  mock_response.status_code = 400
+  mock_get.return_valie = mock_response
+  with pytest.raises(requests.HTTPError):
+    service.get_users()
+import pytest
+import source.shapes as shapes
+
+@pytest.mark.parametrize("side_length, expected_area", [(5, 25), (4, 16), (9, 81)])
+# Marked as: parametrize
+# Use to give multiple parameters
+# In this case: expected_area
+def test_multiple_square_areas(side_length, expected_area):
+  assert shapes.Square(side_length).area() == expected_area
+
+@pytest.mark.parametrize("side_length, expected_perimeter", [(3, 12), (4, 16), (5, 20)])
+# Marked as: parametrize
+# Use to give multiple parameters
+# In this case: expected_perimeter
+def test_multiple_parameters(side_length, expected_perimeter):
+  assert shapes.Square(side_length).perimeter() == expected_perimeter

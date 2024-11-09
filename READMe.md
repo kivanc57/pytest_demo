@@ -1,121 +1,196 @@
-# Utility Scripting Collection  
+# Pytest Testing 🧪
 
-## Description 💥
+This repository provides a comprehensive testing suite for validating geometric shapes, mathematical functions, and a fictional Hogwarts-themed classroom model. With a set of pre-defined tests, mocks, and parameterizations, this project demonstrates extensive testing using `Pytest`.
 
-This project consists of various `Bash` scripts designed to automate tasks related to system administration, backup management, log file handling, and more. Each script is crafted to fulfill a specific role, enhancing efficiency and simplifying complex processes while primarily targeting *Linux* operating systems.
+─── ⋆⋅☆⋅⋆ ─────────────────────────────────────────────────────
 
-### 📄 Purpose
+## Table of Contents
+- [🏗️ Project Structure](#project-structure)
+- [🚀 Installation](#installation)
+- [🛠️ Usage and Execution](#usage-and-execution)
+- [🔬 Testing Components](#testing-components)
+- [🔎 Sample Code and Fixtures](#sample-code-and-fixtures)
+- [🧩 Notes](#notes)
+- [⚙️ Requirements](#requirements)
+- [🤝 Contributing](#contributing)
+- [📜 License](#license)
+- [📬 Contact](#contact)
 
-The *main purpose* of this project is to provide a collection of reusable scripts that streamline routine administrative tasks, allowing system administrators and users to focus on more strategic activities. By automating these processes, we aim to reduce human error, improve reliability, and ensure consistency in execution.
+─── ⋆⋅☆⋅⋆ ─────────────────────────────────────────────────────
 
-### Key Features
-
-- ⚡️ **Automation of Routine Tasks**: Each script automates common system administration tasks, such as backing up important directories, checking disk usage, and monitoring system resources.
-  
-- ⚡️ **Customizable and Modular Design**: Scripts are designed to be modular, making it easy for users to modify or extend functionality as needed to suit their specific environments or requirements.
-  
-- ⚡️**Error Handling**: Each script includes basic error handling to alert users of potential issues during execution, helping to ensure smoother operations.
-  
-- ⚡️**Documentation and Usage Instructions**: Comprehensive inline comments and documentation provide guidance on how to use each script effectively, making them accessible to users of varying skill levels.
-
-
-## 👾 Table of Contents
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Scripts Overview](#scripts-overview)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
-
-## 🤖 Installation
-
-To get started, clone the repository to your local machine:
-
-```bash
-git clone https://github.com/kivanc57/utility_scripting_collection
-cd utility_scripting_collection
+# 🏗️ Project Structure <a id="project-structure"></a>
+```markdown
+📁 project-root
+├── 📁 source
+│ ├── 📄 __init__.py
+│ ├── 📄 functions.py
+│ ├── 📄 school.py
+│ ├── 📄 service.py
+│ └── 📄 shapes.py
+│
+├── 📁 tests
+│ ├── 📄 __init__.py
+│ ├── 📄 conftest.py
+│ ├── 📄 test_Circle.py
+│ ├── 📄 test_functions.py
+│ ├── 📄 test_Rectangle.py
+│ ├── 📄 test_school.py
+│ ├── 📄 test_service.py
+│ └── 📄 test_Square.py
+│
+├── 📄 .gitignore
+├── 📄 .gitattributes
+├── 📄 requirements.txt
+└── 📄 test_commands.txt
 ```
 
-## 🐧 Usage
-To use any of the scripts, navigate to the script's directory and execute it. For example:
+─── ⋆⋅☆⋅⋆ ─────────────────────────────────────────────────────
 
-```bash
-chmod +x your_script.sh
-./your_script.sh
+## 🚀 Installation <a id="installation"></a>
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/kivanc57/pytest_testing
+   cd pytest_testing
+   ```
+
+2. **Set up the virtual environment:**
+    ``` python
+    python3 -m venv venv
+    source venv/bin/activate   # On Windows, use `venv\Scripts\activate`
+
+3. Install dependencies:
+    ``` python
+    pip install -r requirements.txt
+    ```
+
+─── ⋆⋅☆⋅⋆ ─────────────────────────────────────────────────────
+
+## 🛠️ Usage and Execution <a id="usage-and-execution"></a>
+### Running Tests
+The testing suite is built with Pytest and can be executed with various options:
+
+Run all tests:
+``` bash
+pytest
 ```
 
-Make sure to follow any specific instructions included in the comments of each script.
+Run tests with verbose output:
+``` bash
+pytest -v
+```
 
-## 🧙🏽‍♂️ Scripts Overview
-Below is a brief overview of the available scripts in this repository:
+Run specific tests (e.g., slow tests):
+``` bash
+pytest -m slow
+```
 
-### 1. Log Archiver 💯
-- **Filepath**: ./src
-- **Filename**: `log_archiver.sh`
-- **Description**: Moves log files older than 30 days to an archive directory and compresses them.
-### 2. Backup Creator 💯
-- **Filepath**: ./src
-- **Filename**: `backup_creator.sh`
-- **Description**: Backs up specified directories (/etc and /home) and stores them in a designated backup folder.
-### 3. Simple Calculator 💯
-- **Filepath**: ./src
-- **Filename**: `calculator.sh`
-- **Description**: A basic calculator that performs addition, subtraction, multiplication, and division.
-### 4. CPU Usage Monitor 💯
-- **Filepath**: ./src
-- **Filename**: `cpu_monitor.sh`
-- **Description**: Checks the current CPU usage and alerts if it exceeds a specified threshold.
-### 5. URL Checker 💯
-- **Filepath**: ./src
-- **Filename**: `url_checker.sh`
-- **Description**: Checks the HTTP status of a provided URL and reports the result.
-### 6. File Deleter 💯
-- **Filepath**: ./src
-- **Filename**: `file_deleter.sh`
-- **Description**: Deletes files older than a specified number of days in a given directory.
-### 7. Disk Usage Checker 💯
-- **Filepath**: ./src
-- **Filename**: `disk_usage_checker.sh`
-- **Description**: Reports the disk usage of a specified folder and warns if it exceeds a certain percentage.
-### 8. Docker Deployment Script 💯
-- **Filepath**: ./src
-- **Filename**: `docker_deploy.sh`
-- **Description**: Facilitates the deployment of a Docker application, handling image build and container management.
-### 9. Largest File Finder 💯
-- **Filepath**: ./src
-- **Filename**: `largest_file_finder.sh`
-- **Description**: Retrieves the top 10 largest files in a specified directory.
-### 10. Error Log Checker 💯
-- **Filepath**: ./src
-- **Filename**: `error_log_checker.sh`
-- **Description**: Searches system log files for errors and reports any findings.
-### 11. MySQL Backup Script 💯
-- **Filepath**: ./src
-- **Filename**: `mysql_backup.sh`
-- **Description**: Creates a backup of a specified MySQL database.
-### 12. Package Installer 💯
-- **Filepath**: ./src
-- **Filename**: `package_installer.sh`
-- **Description**: Installs a specified package based on the operating system detected.
-### 13.System Monitoring 💯
-- **Filepath**: ./src/server
-- **Filename**: `server_disk_monitor.sh`  
-- **Description**: Monitors disk utilization and logs the status every specified interval.
-### 14. Service Configuration 💯
-- **Filepath**: ./src/server
-- **Filename**: `monitor.service`  
-- **Description**: A systemd service configuration to run the `server_disk_monitor.sh` script as a service.
+### Mock Tests
+Mocks are utilized in this project to simulate external calls (e.g., API requests) and avoid dependencies on real databases or services.
 
-## Contributing 🤩
+### Parameterized Tests
+This project also employs parameterized testing for the shapes module, allowing multiple test cases with different inputs.
+
+─── ⋆⋅☆⋅⋆ ─────────────────────────────────────────────────────
+
+## 🔬 Testing Components <a id="testing-components"></a>
+### **Shapes Module Tests**
+ Tests cover various shapes, including:
+
+- 🔷 **Rectangle** 🔷
+  
+  Validates `area()` and `perimeter()` methods, ensuring correct calculations.
+
+- 🔴 **Circle** 🔴
+
+  Checks `area()` and `perimeter()` for circular dimensions.
+
+
+- 🟩 **Square** 🟩
+
+  Uses parameterized testing to validate multiple `side_length`s.
+
+### Classroom Module Tests
+Simulates a Hogwarts-style classroom:
+
+- 🏫 **Classroom Initialization** 🏫
+
+  Ensures teacher and students are correctly assigned.
+
+- 👨🏻‍🎓 **Student Addition and Removal** 👨🏻‍🎓
+  
+  Tests adding/removing students and handles maximum capacity constraints.
+
+- 👩🏻‍🏫 **Teacher Assignment** 👩🏻‍🏫
+  
+  Validates the teacher's assignment and reassignment.
+
+### Mocked Tests
+Uses unittest.mock to:
+
+* **Mock Database Calls**: Validates responses from database functions without actual database dependencies.
+
+* **Mock API Calls**: Tests API calls and error handling without hitting real endpoints.
+
+─── ⋆⋅☆⋅⋆ ─────────────────────────────────────────────────────
+
+## 🔎 Sample Code and Fixtures <a id="sample-code-and-fixtures"></a>
+- **Fixtures for Reusable Test Objects**: Fixtures in conftest.py help set up reusable test objects for shapes and the classroom environment. One of them is below:
+
+``` python
+# conftest.py
+@pytest.fixture
+def test_rectangle():
+    return shapes.Rectangle(length=10, width=20)
+```
+
+💡 **Example Test Cases**
+* Testing add function
+``` python
+def test_add():
+    result = functions.add(number_one=1, number_two=4)
+    assert result == 5
+```
+
+* Testing classroom initialization
+``` python
+def test_classroom_initialization(hogwarts_classroom):
+    assert hogwarts_classroom.teacher.name == "Minerva McGonagall"
+    assert len(hogwarts_classroom.students) == 5
+```
+
+─── ⋆⋅☆⋅⋆ ─────────────────────────────────────────────────────
+
+### 🧩 Notes <a id="notes"></a>
+* Skip Tests:
+  Some tests are marked as `@pytest.mark.skip` if a feature is broken or in development.
+
+* Expected Failures:
+  `@pytest.mark.xfail` marks tests that are expected to fail under certain conditions.
+
+
+─── ⋆⋅☆⋅⋆ ─────────────────────────────────────────────────────
+
+## ⚙️ Requirements <a id="requirements"></a>
+* Python 3.7+
+* Pytest
+* Mock (for testing API/database dependencies)
+* Requirements specified in `requirements.txt`
+
+─── ⋆⋅☆⋅⋆ ─────────────────────────────────────────────────────
+
+## 🤝 Contributing <a id="contributing"></a>
 Contributions are welcome! If you would like to contribute to this project, please fork the repository and submit a pull request with your changes.
 
-## License ✏️
-This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the LICENSE file for details.
+─── ⋆⋅☆⋅⋆ ─────────────────────────────────────────────────────
 
-## Contact ✉
+## 📜 License <a id="license"></a>
+This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE](https://github.com/kivanc57/pytest_testing/blob/main/LICENSE) file for details.
 
-For any inquiries or contributions, please feel free to reach out. You can find the license information [here](https://github.com/kivanc57/utility_scripting_collection/blob/main/LICENSE).
+─── ⋆⋅☆⋅⋆ ─────────────────────────────────────────────────────
 
+## 📬 Contact <a id="contact"></a>
+
+For any inquiries or contributions, please feel free to reach out.
 - **GitHub Profile**: [kivanc57](https://github.com/kivanc57)
 - **Email**: [kivancgordu@hotmail.com](mailto:kivancgordu@hotmail.com)

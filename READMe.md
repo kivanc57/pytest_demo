@@ -1,4 +1,4 @@
-# Pytest Testing 🧪
+# Pytesting 🧪
 
 This repository provides a comprehensive testing suite for validating geometric shapes, mathematical functions, and a fictional Hogwarts-themed classroom model. With a set of pre-defined tests, mocks, and parameterizations, this project demonstrates extensive testing using `Pytest`.
 
@@ -50,8 +50,8 @@ This repository provides a comprehensive testing suite for validating geometric 
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/kivanc57/pytest_testing
-   cd pytest_testing
+   git clone https://github.com/kivanc57/pytesting
+   cd pytesting
    ```
 
 2. **Set up the virtual environment:**
@@ -185,7 +185,7 @@ Contributions are welcome! If you would like to contribute to this project, plea
 ─── ⋆⋅☆⋅⋆ ─────────────────────────────────────────────────────
 
 ## 📜 License <a id="license"></a>
-This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE](https://github.com/kivanc57/pytest_testing/blob/main/LICENSE) file for details.
+This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE](https://github.com/kivanc57/pytesting/blob/main/LICENSE) file for details.
 
 ─── ⋆⋅☆⋅⋆ ─────────────────────────────────────────────────────
 

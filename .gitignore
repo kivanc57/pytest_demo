@@ -1,4 +1,4 @@
 .pytest_cache/
-__paycache__/
+__pycache__/
 venv/
 .env
